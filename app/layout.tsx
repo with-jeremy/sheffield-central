@@ -2,8 +2,6 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Playfair_Display, Dancing_Script } from "next/font/google"
 import "./globals.css"
-import { TransitionProvider } from "@/context/TransitionContext"
-import AlbumTransition from "@/components/AlbumTransition"
 import MenuButton from "@/components/MenuButton"
 
 const playfair = Playfair_Display({
@@ -31,17 +29,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${playfair.variable} ${dancingScript.variable} font-serif`}>
-        <TransitionProvider>
-          <main className="min-h-screen relative">
-            <MenuButton />
-            {children}
-          </main>
-          <AlbumTransition />
-        </TransitionProvider>
+        <main className="min-h-screen relative">
+          <MenuButton />
+          {children}
+        </main>
       </body>
     </html>
   )
 }
-
 
 import './globals.css'

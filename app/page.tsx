@@ -1,10 +1,8 @@
 import AlbumCover from "@/components/AlbumCover"
-import { prints } from "@/lib/data"
 import Image from "next/image"
 
+
 export default function Home() {
-  const villagePreview = prints.find((print) => print.category === "village")
-  const contemporaryPreview = prints.find((print) => print.category === "contemporary")
 
   return (
     <div className="min-h-screen w-full py-6 px-4 overflow-hidden">
@@ -52,9 +50,7 @@ export default function Home() {
               {/* Mission statement in script font */}
               <div className="text-center">
                 <p className="font-dancing-script text-xl text-purple-900 leading-relaxed">
-                  Preserving the architectural heritage of Sheffield, Alabama through original artwork. Our mission is
-                  to celebrate the historic homes and structures that define our beloved town's character and history,
-                  one beautiful print at a time.
+                  Preserving the architectural heritage of Sheffield, Alabama through original artwork. Our mission isto celebrate the historic homes and structures that define our beloved  town's character and history, one beautiful print at a time.
                 </p>
               </div>
 
@@ -69,36 +65,24 @@ export default function Home() {
 
         {/* Albums container with increased gap */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-48 w-full">
-          {/* Village Album - 3D transformed */}
-          <div
-            className="album-wrapper"
-            style={{
-              transform: "perspective(1000px) rotateX(10deg) rotateY(-15deg) rotateZ(-5deg) translateZ(20px)",
-              transformStyle: "preserve-3d",
-            }}
-          >
-            <div className="album-container">
+          {/* Village Album */}
+          <div className="album-wrapper">
+            <div className="album-container transform -rotate-2">
               <AlbumCover
                 title="Village"
                 category="village"
-                previewImage={villagePreview?.imageSrc || "/placeholder.svg?height=300&width=300"}
+                previewImage={"https://images.unsplash.com/photo-1558036117-15d82a90b9b1?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"}
               />
             </div>
           </div>
 
-          {/* Contemporary Album - 3D transformed */}
-          <div
-            className="album-wrapper"
-            style={{
-              transform: "perspective(1000px) rotateX(10deg) rotateY(15deg) rotateZ(5deg) translateZ(20px)",
-              transformStyle: "preserve-3d",
-            }}
-          >
-            <div className="album-container">
+          {/* Contemporary Album */}
+          <div className="album-wrapper">
+            <div className="album-container transform rotate-2">
               <AlbumCover
                 title="Contemporary"
                 category="contemporary"
-                previewImage={contemporaryPreview?.imageSrc || "/placeholder.svg?height=300&width=300"}
+                previewImage={"https://images.unsplash.com/photo-1558036117-15d82a90b9b1?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"}
               />
             </div>
           </div>
