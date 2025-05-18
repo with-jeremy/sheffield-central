@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 255, 251, 235;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+}
+
+@layer base {
+  body {
+    @apply font-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-playfair;
+  }
+}
+
+.font-dancing-script {
+  font-family: var(--font-dancing-script);
+}
+
+.font-playfair {
+  font-family: var(--font-playfair);
+}
+
+/* 3D album effects */
+.album-container {
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease;
+}
+
+.album-container:hover {
+  transform: translateZ(30px) scale(1.05);
+}
+
+.album-wrapper {
+  transition: all 0.5s ease;
+}
+
+.album-wrapper:hover {
+  z-index: 20;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fffbeb;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #b45309;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #92400e;
+}
