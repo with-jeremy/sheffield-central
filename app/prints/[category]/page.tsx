@@ -1,26 +1,33 @@
-"use client"
+
 
 import { prints } from "@/lib/data"
 import PolaroidImage from "@/components/PolaroidImage"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 
-interface CategoryPageProps {
-  params: { category: string }
-}
-
-export default function CategoryPage({ params }: CategoryPageProps) {
-  const { category } = params
-  const router = useRouter()
+export default async function CategoryPage({
+  params,
+}: {
+  params: Promise<{ category: string }>
+}) {
+  const { category } = await params
   const categoryPrints = prints.filter((print) => print.category === category)
   const categoryTitle = category.charAt(0).toUpperCase() + category.slice(1)
 
   return (
     <div className="min-h-screen bg-amber-50 py-12 px-4 pt-20">
       <div className="max-w-6xl mx-auto">
+        <nav className="mb-8 text-sm text-purple-900" aria-label="Breadcrumb">
+          <ol className="list-none p-0 inline-flex">
+            <li className="flex items-center">
+              <Link href="/" className="hover:underline">Home</Link>
+              <span className="mx-2">/</span>
+            </li>
+            <li className="flex items-center font-semibold text-purple-900">{categoryTitle} Prints</li>
+          </ol>
+        </nav>
         <div className="mb-8 text-center">
           <h1 className="text-4xl font-bold text-purple-900">{categoryTitle} Prints</h1>
-          <p className="mt-2 text-purple-800">Historical paintings from Sheffield, Alabama</p>
+          <p className="mt-2 text-purple-800">Historical paintings from Sheffield, Alabama</p> 
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 album-contents">
           {categoryPrints.map((print) => (

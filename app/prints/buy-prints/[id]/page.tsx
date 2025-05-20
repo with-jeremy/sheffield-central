@@ -1,21 +1,18 @@
-"use client"
-
 import { prints } from "@/lib/data"
 import PolaroidImage from "@/components/PolaroidImage"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { notFound } from "next/navigation"
+import React from "react"
+import PrintDetailActions from "@/components/PrintDetailActions"
 
-interface PrintDetailPageProps {
-  params: { id: string }
-}
-
-export default function PrintDetailPage({ params }: PrintDetailPageProps) {
-  const print = prints.find((p) => p.id === params.id)
-
-  if (!print) {
-    notFound()
-  }
+export default async function PrintDetailPage({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
+  const { id } = await params
+  const print = prints.find((p) => p.id === id)
+  if (!print) return <div className="p-8 text-center text-red-700">Print not found.</div>
 
   const categoryTitle = print.category.charAt(0).toUpperCase() + print.category.slice(1)
 
@@ -25,7 +22,6 @@ export default function PrintDetailPage({ params }: PrintDetailPageProps) {
         <Link href={`/prints/${print.category}`} className="inline-block mb-8 text-purple-900 hover:text-purple-700">
           ← Back to {categoryTitle} Prints
         </Link>
-
         <div className="flex flex-col md:flex-row gap-8 items-center">
           <div className="md:w-1/2">
             <PolaroidImage
@@ -38,18 +34,10 @@ export default function PrintDetailPage({ params }: PrintDetailPageProps) {
               showPriceSticker={false}
             />
           </div>
-
           <div className="md:w-1/2">
             <h1 className="text-3xl font-bold text-purple-900 mb-4">{print.title}</h1>
             <p className="text-purple-800 mb-6">{print.description}</p>
-            <div className="flex flex-row gap-4 mb-6">
-              <Button className="flex-1 bg-purple-800 hover:bg-purple-700 text-white px-6 py-4 text-lg">
-                Buy 10x12 $12
-              </Button>
-              <Button className="flex-1 bg-purple-700 hover:bg-purple-600 text-white px-6 py-4 text-lg">
-                Buy 11x13 $15
-              </Button>
-            </div>
+            <PrintDetailActions print={print} />
           </div>
         </div>
       </div>
