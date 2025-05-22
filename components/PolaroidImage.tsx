@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import Image from "next/image"
+import Image from "next/image";
 
 interface PolaroidImageProps {
-  src: string
-  alt: string
-  title: string
-  width?: number
-  height?: number
-  priority?: boolean
-  price?: string
-  showPriceSticker?: boolean
+  src: string;
+  alt: string;
+  title: string;
+  width?: number;
+  height?: number;
+  priority?: boolean;
+  price?: string;
+  showPriceSticker?: boolean;
 }
 
 export default function PolaroidImage({
@@ -39,9 +39,8 @@ export default function PolaroidImage({
       </div>
       {/* Title/Description */}
       <div className="mt-2 text-center mb-2">
-        <p className="font-dancing-script text-xl text-amber-900">{title}</p>
+        <p className="font-caveat text-xl text-amber-900">{title}</p>
       </div>
     </div>
-
-      )}
-
+  );
+}

@@ -1,16 +1,20 @@
-"use client"
+"use client";
 
-import type React from "react"
-import Link from "next/link"
-import Image from "next/image"
+import type React from "react";
+import Link from "next/link";
+import Image from "next/image";
 
 interface AlbumCoverProps {
-  title: string
-  category: string
-  previewImage: string
+  title: string;
+  category: string;
+  previewImage: string;
 }
 
-export default function AlbumCover({ title, category, previewImage }: AlbumCoverProps) {
+export default function AlbumCover({
+  title,
+  category,
+  previewImage,
+}: AlbumCoverProps) {
   return (
     <Link
       href={`/prints/${category}`}
@@ -31,7 +35,8 @@ export default function AlbumCover({ title, category, previewImage }: AlbumCover
           className="absolute top-0 right-0 w-8 h-full bg-amber-900 rounded-r-sm origin-right"
           style={{
             transform: "rotateY(90deg) translateZ(140px)",
-            backgroundImage: "linear-gradient(to left, rgba(0,0,0,0.4), rgba(0,0,0,0.1))",
+            backgroundImage:
+              "linear-gradient(to left, rgba(0,0,0,0.4), rgba(0,0,0,0.1))",
           }}
         ></div>
         {/* Album thickness - bottom edge */}
@@ -39,7 +44,8 @@ export default function AlbumCover({ title, category, previewImage }: AlbumCover
           className="absolute bottom-0 left-0 w-full h-8 bg-amber-900 rounded-b-sm origin-bottom"
           style={{
             transform: "rotateX(-90deg) translateZ(140px)",
-            backgroundImage: "linear-gradient(to top, rgba(0,0,0,0.4), rgba(0,0,0,0.1))",
+            backgroundImage:
+              "linear-gradient(to top, rgba(0,0,0,0.4), rgba(0,0,0,0.1))",
           }}
         ></div>
         {/* Album back cover */}
@@ -84,7 +90,8 @@ export default function AlbumCover({ title, category, previewImage }: AlbumCover
           <div
             className="absolute left-0 top-0 bottom-0 w-[20px] bg-amber-900"
             style={{
-              backgroundImage: "linear-gradient(to right, rgba(0,0,0,0.4), rgba(0,0,0,0.1))",
+              backgroundImage:
+                "linear-gradient(to right, rgba(0,0,0,0.4), rgba(0,0,0,0.1))",
             }}
           ></div>
           {/* Album binding details */}
@@ -99,9 +106,10 @@ export default function AlbumCover({ title, category, previewImage }: AlbumCover
           {/* Preview image */}
           <div className="flex-1 flex items-center justify-center p-6">
             <div
-              className="bg-white p-3 pt-3 pb-10 shadow-md"
+              className="bg-white p-3 pt-3 pb-4 shadow-md"
               style={{
-                boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)",
+                boxShadow:
+                  "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)",
               }}
             >
               <div className="relative overflow-hidden">
@@ -114,7 +122,9 @@ export default function AlbumCover({ title, category, previewImage }: AlbumCover
                 />
               </div>
               <div className="mt-2 text-center">
-                <p className="font-dancing-script text-lg text-amber-900">{title} Collection</p>
+                <p className="font-caveat text-lg text-amber-900">
+                  {title} Collection
+                </p>
               </div>
             </div>
           </div>
@@ -126,5 +136,5 @@ export default function AlbumCover({ title, category, previewImage }: AlbumCover
         </div>
       </div>
     </Link>
-  )
+  );
 }

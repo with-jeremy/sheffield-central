@@ -17,24 +17,35 @@ datasource db {
 enum Category {
   VILLAGE
   HISTORIC
+  CONTEMPORARY
+}
+
+model Pricing {
+  id          Int     @id @default(autoincrement())
+  description String  @unique
+  amount      Decimal
+  orders      Order[]
 }
 
 model Product {
-  id          Int     @id @default(autoincrement())
-  title       String?
+  id          Int      @id @default(autoincrement())
+  title       String   @unique
   description String?
-  category    String
+  category    Category
   imageURL    String
-  price       Decimal
   orders      Order[]
 }
 
 model Order {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  productId Int
-  size      String // Added: print size (e.g., '10x12')
-  price     Decimal // Added: price at time of order
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  id            Int      @id @default(autoincrement())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  productId     Int
+  pricingId     Int
+  price         Decimal
+  payerName     String?
+  payerEmail    String?
+  paypalOrderId String?
+  product       Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  pricing       Pricing  @relation(fields: [pricingId], references: [id])
 }

@@ -5,6 +5,8 @@
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-rgb: 255, 251, 235;
+  --font-abel: "Abel", sans-serif;
+  --font-caveat: "Caveat", cursive;
 }
 
 body {
@@ -14,7 +16,7 @@ body {
 
 @layer base {
   body {
-    @apply font-serif;
+    @apply font-abel;
   }
 
   h1,
@@ -23,16 +25,16 @@ body {
   h4,
   h5,
   h6 {
-    @apply font-playfair;
+    @apply font-abel;
   }
 }
 
-.font-dancing-script {
-  font-family: var(--font-dancing-script);
+.font-caveat {
+  font-family: var(--font-caveat);
 }
 
-.font-playfair {
-  font-family: var(--font-playfair);
+.font-abel {
+  font-family: var(--font-abel);
 }
 
 /* 3D album effects */
@@ -49,13 +51,10 @@ body {
   transition: all 0.5s ease;
 }
 
-.album-wrapper:hover {
-  z-index: 20;
-}
-
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 12px;
+  background: #e0f2fe; /* sky-100 */
 }
 
 ::-webkit-scrollbar-track {
@@ -63,10 +62,16 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #b45309;
-  border-radius: 4px;
+  background: #38bdf8; /* sky-400 */
+  border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #92400e;
+  background: #0ea5e9; /* sky-500 */
+}
+
+/* Firefox */
+html {
+  scrollbar-color: #38bdf8 #e0f2fe;
+  scrollbar-width: thin;
 }

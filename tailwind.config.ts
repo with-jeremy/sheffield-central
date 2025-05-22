@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 const config: Config = {
   darkMode: ["class"],
   content: [
@@ -56,19 +56,19 @@ const config: Config = {
           800: "#92400e",
           900: "#78350f",
         },
-        borderRadius: {
-          lg: "var(--radius)",
-          md: "calc(var(--radius) - 2px)",
-          sm: "calc(var(--radius) - 4px)",
-        },
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        serif: ["var(--font-playfair)", "serif"],
-        "dancing-script": ["var(--font-dancing-script)", "cursive"],
+        abel: ["Abel", "sans-serif"],
+        caveat: ["Caveat", "cursive"],
       },
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+};
 
-export default config
+export default config;
