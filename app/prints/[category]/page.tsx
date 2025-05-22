@@ -1,6 +1,4 @@
-
-
-import { prints } from "@/lib/data"
+import prisma from "@/lib/prisma"
 import PolaroidImage from "@/components/PolaroidImage"
 import Link from "next/link"
 
@@ -10,7 +8,21 @@ export default async function CategoryPage({
   params: Promise<{ category: string }>
 }) {
   const { category } = await params
-  const categoryPrints = prints.filter((print) => print.category === category)
+  // Fetch prints from the database for this category (enum is uppercase in DB)
+  const categoryPrints = await prisma.product.findMany({
+    where: { category: category.toUpperCase() },
+    orderBy: { id: "asc" },
+  })
+  // If no prints found, show a message
+  if (!categoryPrints.length) {
+    return (
+      <div className="min-h-screen bg-amber-50 py-12 px-4 pt-20">
+        <div className="max-w-6xl mx-auto text-center text-red-700">
+          No prints found for this category.
+        </div>
+      </div>
+    )
+  }
   const categoryTitle = category.charAt(0).toUpperCase() + category.slice(1)
 
   return (
@@ -34,12 +46,12 @@ export default async function CategoryPage({
             <div key={print.id}>
               <Link href={`/prints/buy-prints/${print.id}`} className="transform transition-transform hover:scale-105 block">
                 <PolaroidImage
-                  src={print.imageSrc}
-                  alt={print.title}
-                  title={print.description}
+                  src={print.imageURL}
+                  alt={print.title ?? ""}
+                  title={print.description ?? ""}
                   width={300}
                   height={300}
-                  price="$10"
+                  price={print.price ? `$${typeof print.price === 'object' && 'toNumber' in print.price ? print.price.toNumber() : Number(print.price)}` : undefined}
                   showPriceSticker={true}
                 />
               </Link>

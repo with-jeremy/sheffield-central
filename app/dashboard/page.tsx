@@ -4,6 +4,7 @@ import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { format } from 'date-fns'
+import DashboardPayPalButton from '@/components/DashboardPayPalButton'
 
 // Types for products and orders
 type Product = {
@@ -72,35 +73,7 @@ export default async function DashboardPage({ searchParams }: { searchParams?: {
                   <Link href={`/dashboard/products/${product.id}`}>Edit</Link>
                 </Button>
                 {/* PayPal Buy Now Button */}
-                <div id={`paypal-button-container-${product.id}`}></div>
-                <script dangerouslySetInnerHTML={{
-                  __html: `
-                    if (typeof window !== 'undefined' && window.paypal) {
-                      window.paypal.Buttons({
-                        createOrder: function(data, actions) {
-                          return fetch('/api/paypal/create-order', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ productId: ${product.id}, price: ${product.price}, title: '${product.title}' })
-                          })
-                          .then(res => res.json())
-                          .then(data => data.id);
-                        },
-                        onApprove: function(data, actions) {
-                          return fetch('/api/paypal/capture-order', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ orderID: data.orderID, productId: ${product.id} })
-                          })
-                          .then(res => res.json())
-                          .then(details => {
-                            alert('Transaction completed!');
-                          });
-                        }
-                      }).render('#paypal-button-container-${product.id}');
-                    }
-                  `
-                }} />
+                <DashboardPayPalButton product={product} />
               </Card>
             ))}
           </div>

@@ -9,19 +9,24 @@ export default function PrintDetailActions({ print }: { print: typeof prints[0] 
   const [paypalError, setPaypalError] = useState("")
   const PRICE = 12.00
 
-  const createOrder = (data: any, actions: any) => {
-    return actions.order.create({
-      purchase_units: [
-        {
-          amount: {
-            value: PRICE.toFixed(2),
-            currency_code: 'USD',
-          },
+  const createOrder = async (data: any, actions: any) => {
+    try {
+      const res = await fetch('/api/paypal/create-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: PRICE.toFixed(2),
           description: print.title,
           custom_id: print.id.toString(),
-        },
-      ],
-    })
+        }),
+      });
+      const order = await res.json();
+      if (!order.id) throw new Error('No order ID returned from backend');
+      return order.id;
+    } catch (err: any) {
+      setPaypalError('Failed to create PayPal order. ' + (err?.message || ''));
+      throw err;
+    }
   }
 
   const onApprove = async (data: any, actions: any) => {
@@ -29,7 +34,6 @@ export default function PrintDetailActions({ print }: { print: typeof prints[0] 
     setPaypalError("")
     try {
       const order = await actions.order.get()
-      console.log('PayPal order details:', order)
       const payerName = order.payer?.name?.given_name || ''
       const payerEmail = order.payer?.email_address || ''
       const paymentData = {
@@ -38,8 +42,8 @@ export default function PrintDetailActions({ print }: { print: typeof prints[0] 
         amount: PRICE.toFixed(2),
         orderID: data.orderID,
         printId: print.id,
+        size: 'default', // No size on print, so use default
       }
-      console.log('Sending payment data to /api/payment:', paymentData)
       const response = await fetch('/api/payment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -47,15 +51,13 @@ export default function PrintDetailActions({ print }: { print: typeof prints[0] 
       })
       if (!response.ok) {
         const errorText = await response.text()
-        console.error('API error response:', errorText)
         setPaypalError(`Payment processing failed: ${errorText}`)
         return
       }
       const result = await response.json()
-      console.log('API response:', result)
-      alert('Payment processed successfully!')
+      // Redirect to completed order page with order details
+      window.location.href = `/prints/order-complete?orderId=${result.order.id}`
     } catch (error: any) {
-      console.error('Payment failed:', error)
       setPaypalError(`Payment failed. ${error?.message || ''}`)
     } finally {
       setIsProcessing(false)
@@ -69,7 +71,7 @@ export default function PrintDetailActions({ print }: { print: typeof prints[0] 
 
   return (
     <PayPalScriptProvider options={{
-      clientId:"test",
+      clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "test",
       currency: 'USD',
       intent: 'capture',
     }}>

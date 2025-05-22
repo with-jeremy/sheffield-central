@@ -144,7 +144,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "c:\\Users\\jdwoo\\Documents\\Dev\\projects\\sheffield-central\\githubdesktop\\sheffield-central\\generated\\prisma",
+      "value": "C:\\Users\\jdwoo\\Documents\\Dev\\projects\\sheffield-central\\githubdesktop\\sheffield-central\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -158,7 +158,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "c:\\Users\\jdwoo\\Documents\\Dev\\projects\\sheffield-central\\githubdesktop\\sheffield-central\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\jdwoo\\Documents\\Dev\\projects\\sheffield-central\\githubdesktop\\sheffield-central\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -172,6 +172,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -182,7 +183,7 @@ const config = {
   },
   "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum Category {\n  VILLAGE\n  HISTORIC\n}\n\nmodel Product {\n  id          Int     @id @default(autoincrement())\n  title       String?\n  description String?\n  category    String\n  imageURL    String\n  price       Decimal\n  orders      Order[]\n}\n\nmodel Order {\n  id        Int      @id @default(autoincrement())\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  productId Int\n  size      String // Added: print size (e.g., '10x12')\n  price     Decimal // Added: price at time of order\n  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)\n}\n",
   "inlineSchemaHash": "96e6824e1e75b94f28cb7f45bc722fa3b7619b75324519c952d787c263f3ab2e",
-  "copyEngine": false
+  "copyEngine": true
 }
 config.dirname = '/'
 
